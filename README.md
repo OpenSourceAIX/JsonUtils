@@ -125,7 +125,7 @@ So a prefered way to convert this into a strict String via a join-text block.
     * returns:
         * a corresponding JsonArray / JsonObject
 
-![image](https://user-images.githubusercontent.com/22613139/44954546-dc2cf100-aed5-11e8-9b53-a591579164bc.png)
+![image](https://user-images.githubusercontent.com/22613139/44956212-fb864700-aef2-11e8-920b-73348de50434.png)
 
 * isAJsonArray
     * Check if an object is a JsonArray
@@ -134,6 +134,6 @@ So a prefered way to convert this into a strict String via a join-text block.
 * isAJsonObject
     * Check if an object is a JsonObject
 * isJsonObject
-    * ***DEPRECATED*** via CanParseJsonObject
+    * ***DEPRECATED*** use `CanParseJsonObject` instead
 * isNull
     * Check if an object is null

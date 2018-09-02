@@ -1,0 +1,50 @@
+{
+    "JsonUtils": {
+        "en": {
+            "component": "Json Utilities",
+            "helpString": "This is a component of json utilities, helping developers handle any json in their apps.",
+            "properties": {},
+            "events": {},
+            "methods": {
+                "isJsonObject": "(DEPRECATED) Use CanParseJsonObject instead"
+            },
+            "params": {}
+        },
+        "zh_CN": {
+            "component": "Json工具",
+            "helpString": "本Json工具集可以帮助开发者更加方便地进行Json相关的操作",
+            "properties": {},
+            "events": {},
+            "methods": {
+                "CanParseJsonObject": "可以转换为Json对象",
+                "Json2List": "Json转列表",
+                "JsonArray_Append": "Json数组_追加值",
+                "JsonArray_Get": "Json数组_取值",
+                "JsonArray_Length": "Json数组_长度",
+                "JsonArray_Put": "Json数组_赋值",
+                "JsonArray_Remove": "Json数组_移除值",
+                "JsonObject_Contains": "Json对象_包含键",
+                "JsonObject_Get": "Json对象_取值",
+                "JsonObject_Put": "Json对象_赋值",
+                "JsonObject_Remove": "Json对象_移除",
+                "JsonObject_Size": "Json对象_键值对数量",
+                "List2JsonString": "列表转Json字串",
+                "ParseJsonString": "解析Json字串",
+                "ParseList": "解析列表",
+                "isAJsonArray": "值为Json数组",
+                "isAJsonArrayOrObject": "值为Json数组或对象",
+                "isAJsonObject": "值为Json对象",
+                "isJsonObject": "（已弃用）请使用“可以转换为Json对象”",
+                "isNull": "值为空"
+            },
+            "params": {
+                "jsonArray": "json数组",
+                "jsonObject": "json对象",
+                "object": "输入值",
+                "key": "键",
+                "value": "值",
+                "index": "索引"
+            }
+        }
+    }
+}
