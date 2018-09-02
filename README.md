@@ -2,6 +2,8 @@
 
 Some Json utilities for App Inventor (& Thunkable etc.)
 
+[Download (Releases)](https://github.com/OpenSourceAIX/JsonUtils/releases)
+
 ## Defined JsonType(s)
 
 Developers can use these as texts when using join-text block  
