@@ -230,6 +230,15 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         return new JsonArray();
     }
 
+    /**
+     * Return json string of a JsonArray
+     */
+    @SimpleFunction(
+        description = "Return json string of a JsonArray")
+    public static String JsonArray_ToString(JsonArray jsonArray) {
+        return jsonArray.toString();
+    }
+
 
 
     /**
@@ -289,6 +298,15 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         description = "Return a empty JsonObject: {}")
     public static JsonObject JsonObject_CreateEmpty() {
         return new JsonObject();
+    }
+
+    /**
+     * Return json string of a JsonObject
+     */
+    @SimpleFunction(
+        description = "Return json string of a JsonObject")
+    public static String JsonObject_ToString(JsonObject jsonObject) {
+        return jsonObject.toString();
     }
 
 }
