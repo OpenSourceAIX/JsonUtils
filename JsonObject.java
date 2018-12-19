@@ -56,6 +56,9 @@ public final class JsonObject extends JsonType {
     private final JSONObject object;
 
     JsonObject(ComponentContainer container) {
+        this();
+    }
+    JsonObject() {
         this(new JSONObject());
     }
     JsonObject(JSONObject object) {

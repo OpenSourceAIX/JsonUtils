@@ -221,6 +221,15 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         return jsonArray.getArray().length();
     }
 
+    /**
+     * Return a empty JsonArray: []
+     */
+    @SimpleFunction(
+        description = "Return a empty JsonArray: []")
+    public static JsonArray JsonArray_CreateEmpty() {
+        return new JsonArray();
+    }
+
 
 
     /**
@@ -271,6 +280,15 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         description = "Get the number of keys stored in the JsonObject.")
     public static int JsonObject_Size(JsonObject jsonObject) {
         return jsonObject.getObject().length();
+    }
+
+    /**
+     * Return a empty JsonObject: {}
+     */
+    @SimpleFunction(
+        description = "Return a empty JsonObject: {}")
+    public static JsonObject JsonObject_CreateEmpty() {
+        return new JsonObject();
     }
 
 }

@@ -36,6 +36,9 @@ public final class JsonArray extends JsonType {
     private final JSONArray array;
 
     JsonArray(ComponentContainer container) {
+        this();
+    }
+    JsonArray() {
         this(new JSONArray());
     }
     JsonArray(JSONArray array) {
