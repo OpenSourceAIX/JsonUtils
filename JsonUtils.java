@@ -49,13 +49,14 @@ public class JsonUtils extends AndroidNonvisibleComponent {
             } catch (IllegalArgumentException ok) {
                 return JsonObject.parseJSONObject(list);
             }
-        } catch (JSONException e) {
+        } catch (JSONException ok) {
             return new JSONArray();
         }
     }
 
     /**
-     * Check if the List can be converted into a JSONObject
+     * @param list
+     * @return boolean - if the List can be converted into a JsonObject
      */
     @Deprecated
     @SimpleFunction(
@@ -63,11 +64,12 @@ public class JsonUtils extends AndroidNonvisibleComponent {
                     + "THIS METHOD IS DEPRECATED, PLEASE USE CanParseJsonObject() INSTEAD!",
         userVisible = false)
     public static boolean isJsonObject(YailList list) {
-        return JsonObject.canParseJSONObject(list);
+        return CanParseJsonObject(list);
     }
 
     /**
-     * Check if the List can be parsed into a JSONObject
+     * @param list
+     * @return boolean - if the List can be converted into a JsonObject
      */
     @SimpleFunction(
         description = "Check if the List can be parsed into a JsonObject")
@@ -76,7 +78,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Parse a json string / JSONArray / JSONObject / JsonArray / JsonObject into a List
+     * @param object - json string / JSONArray / JSONObject / JsonArray / JsonObject
+     * @return list
      */
     @SimpleFunction(
         description = "Parse a json string / JsonArray / JsonObject into a List")
@@ -93,7 +96,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
 
     /**
-     * Parse a list into a JsonArray / JsonObject
+     * @param list
+     * @return JsonArray / JsonObject
      */
     @SimpleFunction(
         description = "Parse a list into a JsonArray / JsonObject")
@@ -105,7 +109,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Parse a json string into a JsonArray / JsonObject
+     * @param jsonString
+     * @return JsonArray / JsonObject
      */
     @SimpleFunction(
         description = "Parse a json string into a JsonArray / JsonObject")
@@ -125,37 +130,41 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
 
     /**
-     * Check if an object is null
+     * @param object
+     * @return boolean - if the object is null
      */
     @SimpleFunction(
-        description = "Check if an object is null")
+        description = "Check if the object is null")
     public static boolean isNull(Object object) {
         return object == null;
     }
 
     /**
-     * Check if an object is a JsonArray
+     * @param object
+     * @return boolean - if the object is a JsonArray
      */
     @SimpleFunction(
-        description = "Check if an object is a JsonArray")
+        description = "Check if the object is a JsonArray")
     public static boolean isAJsonArray(Object object) {
         return object instanceof JsonArray;
     }
 
     /**
-     * Check if an object is a JsonObject
+     * @param object
+     * @return boolean - if the object is a JsonObject
      */
     @SimpleFunction(
-        description = "Check if an object is a JsonObject")
+        description = "Check if the object is a JsonObject")
     public static boolean isAJsonObject(Object object) {
         return object instanceof JsonObject;
     }
 
     /**
-     * Check if an object is a JsonArray or a JsonObject
+     * @param object
+     * @return boolean - if the object is a JsonArray or JsonObject
      */
     @SimpleFunction(
-        description = "Check if an object is a JsonArray or a JsonObject")
+        description = "Check if the object is a JsonArray or JsonObject")
     public static boolean isAJsonArrayOrObject(Object object) {
         return isAJsonArray(object) || isAJsonObject(object);
     }
@@ -163,8 +172,9 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
 
     /**
-     * Get the object value associated with an index.
-     * Return null if there is no object at that index.
+     * @param jsonArray
+     * @param index
+     * @return (value) / null
      */
     @SimpleFunction(
         description = "Get the object value associated with an index. "
@@ -174,13 +184,17 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Put or replace an object value in the JSONArray.
-     * If the index is greater than the length of the JSONArray,
+     * Put or replace an object value in the JsonArray.
+     * If the index is greater than the length of the JsonArray,
      * then null elements will be added as necessary to pad it out.
+     * @param jsonArray
+     * @param index
+     * @param value
+     * @throws JSONException
      */
     @SimpleFunction(
-        description = "Put or replace an object value in the JSONArray. "
-                    + "If the index is greater than the length of the JSONArray, "
+        description = "Put or replace an object value in the JsonArray. "
+                    + "If the index is greater than the length of the JsonArray, "
                     + "then null elements will be added as necessary to pad it out.")
     public static void JsonArray_Put(JsonArray jsonArray, int index, Object value) throws JSONException {
         if (index < 1) {
@@ -195,6 +209,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
     /**
      * Append an value. This increases the array's length by one.
+     * @param jsonArray
+     * @param value
      */
     @SimpleFunction(
         description = "Append an value. This increases the array's length by one.")
@@ -207,6 +223,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
     /**
      * Remove an index and close the hole.
+     * @param jsonArray
+     * @param index
      */
     @SimpleFunction(
         description = "Remove an index and close the hole.")
@@ -215,7 +233,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Get the number of elements in the JSONArray, included nulls.
+     * @param jsonArray
+     * @return int - the number of elements in the JsonArray, included nulls.
      */
     @SimpleFunction(
         description = "Get the number of elements in the JsonArray, included nulls.")
@@ -224,7 +243,7 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Return a empty JsonArray: []
+     * @return JsonArray - empty JsonArray: []
      */
     @SimpleFunction(
         description = "Return a empty JsonArray: []")
@@ -233,7 +252,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Return json string of a JsonArray
+     * @param jsonArray
+     * @return String - json string of the JsonArray
      */
     @SimpleFunction(
         description = "Return json string of a JsonArray")
@@ -244,6 +264,9 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     /**
      * Get a value from jsonArray with a path
      * e.g. jsonArray=[1,[1,2,3,{"key":"valueWanted"]],3], path=2.4.key, result="valueWanted"
+     * @param jsonArray
+     * @param path
+     * @return (value) / null - value from jsonArray with a path
      */
     @SimpleFunction(
         description = "Get a value from jsonArray with a path"
@@ -284,6 +307,9 @@ public class JsonUtils extends AndroidNonvisibleComponent {
      * Put a value into jsonArray with a path
      * e.g. jsonArray=[1,[1,2,3,{"key":"value"]],3], path=2.4.key, value="newValue"
      *      result=[1,[1,2,3,{"key":"newValue"]],3]
+     * @param jsonArray
+     * @param path
+     * @param value
      */
     @SimpleFunction(
         description = "Put a value into jsonArray with a path"
@@ -315,16 +341,20 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
 
     /**
-     * Determine if the JSONObject contains a specific key.
+     * @param jsonObject
+     * @param key
+     * @return boolean - if the JsonObject contains the specified key
      */
     @SimpleFunction(
-        description = "Determine if the JSONObject contains a specific key.")
+        description = "Determine if the JsonObject contains the specified key.")
     public static boolean JsonObject_Contains(JsonObject jsonObject, String key) {
         return jsonObject.getObject().has(key);
     }
 
     /**
-     * Get the value object associated with a key. Returns null if there is no value.
+     * @param jsonObject
+     * @param key
+     * @return (value) - object associated with a key. Returns null if there is no value.
      */
     @SimpleFunction(
         description = "Get the value object associated with a key. "
@@ -334,10 +364,11 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * List all keys of the jsonObject
+     * @param jsonObject
+     * @return list - all keys in the JsonObject
      */
     @SimpleFunction(
-        description = "List all keys of the jsonObject")
+        description = "List all keys in the JsonObject")
     public static YailList JsonObject_GetKeyList(JsonObject jsonObject) {
         Iterator<String> iterator = jsonObject.getObject().keys();
         String[] keys = new String[JsonObject_Size(jsonObject)];
@@ -350,6 +381,10 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
     /**
      * Put a key-value pair in the JsonObject.
+     * @param jsonObject
+     * @param key
+     * @param value
+     * @throws JSONException
      */
     @SimpleFunction(
         description = "Put a key-value pair in the JsonObject.")
@@ -363,6 +398,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
 
     /**
      * Remove a key and its value, if present.
+     * @param jsonObject
+     * @param key
      */
     @SimpleFunction(
         description = "Remove a key and its value, if present.")
@@ -371,7 +408,8 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Get the number of keys stored in the JSONObject.
+     * @param jsonObject
+     * @return int - number of keys stored in the JsonObject
      */
     @SimpleFunction(
         description = "Get the number of keys stored in the JsonObject.")
@@ -380,7 +418,7 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Return a empty JsonObject: {}
+     * @return JsonObject - empty JsonObject: {}
      */
     @SimpleFunction(
         description = "Return a empty JsonObject: {}")
@@ -389,10 +427,11 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * Return json string of a JsonObject
+     * @param jsonObject
+     * @return String - json string of the JsonObject
      */
     @SimpleFunction(
-        description = "Return json string of a JsonObject")
+        description = "Return json string of the JsonObject")
     public static String JsonObject_ToString(JsonObject jsonObject) {
         return jsonObject.toString();
     }
@@ -400,6 +439,9 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     /**
      * Get a value from jsonObject with a path
      * e.g. jsonObject={"a":[1,2,3,{"b":"valueWanted"}]}, path=a.4.b, result="valueWanted"
+     * @param jsonObject
+     * @param path
+     * @return (value) - from jsonObject with a path
      */
     @SimpleFunction(
         description = "Get a value from jsonArray with a path"
@@ -430,6 +472,9 @@ public class JsonUtils extends AndroidNonvisibleComponent {
      * Put a value into jsonObject with a path
      * e.g. jsonObject={"a":[1,2,3,{"b":"value"}]}, path=a.4.b, value="newValue"
      *      result={"a":[1,2,3,{"b":"newValue"}]}
+     * @param jsonObject
+     * @param path
+     * @param value
      */
     @SimpleFunction(
         description = "Put a value into jsonArray with a path"
