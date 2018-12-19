@@ -1,5 +1,7 @@
 package cn.colintree.aix.JsonUtils;
 
+import java.util.Iterator;
+
 import com.google.appinventor.components.annotations.DesignerComponent;
 import com.google.appinventor.components.annotations.SimpleFunction;
 import com.google.appinventor.components.annotations.SimpleObject;
@@ -258,6 +260,21 @@ public class JsonUtils extends AndroidNonvisibleComponent {
                     + "Returns null if there is no value.")
     public static Object JsonObject_Get(JsonObject jsonObject, String key) {
         return jsonObject.getObject().opt(key);
+    }
+
+    /**
+     * List all keys of the jsonObject
+     */
+    @SimpleFunction(
+        description = "List all keys of the jsonObject")
+    public static YailList JsonObject_GetKeyList(JsonObject jsonObject) {
+        Iterator<String> iterator = jsonObject.getObject().keys();
+        String[] keys = new String[JsonObject_Size(jsonObject)];
+        int index = 0;
+        while (iterator.hasNext()) {
+            keys[index++] = iterator.next();
+        }
+        return YailList.makeList(keys);
     }
 
     /**
