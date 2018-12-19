@@ -30,12 +30,21 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         super(container.$form());
     }
 
+    @Deprecated
     @SimpleFunction(
-        description = "Convert list into an json string. Would "
-                    + "For more details about accepted format, "
-                    + "see https://github.com/OpenSourceAIX/JsonUtils")
+        description = "Deprecated method, use ToJsonString(object) instead",
+        userVisible = false)
     public static String List2JsonString(YailList list) {
-        return List2Json(list).toString();
+        return ToJsonString(list);
+    }
+
+    @SimpleFunction(
+        description = "Convert list, JsonObject & JsonArray to json string")
+    public static String ToJsonString(Object object) {
+        if (object instanceof YailList) {
+            object = List2Json((YailList) object);
+        }
+        return object.toString();
     }
 
     static Object List2Json(YailList list) {
@@ -252,16 +261,6 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     }
 
     /**
-     * @param jsonArray
-     * @return String - json string of the JsonArray
-     */
-    @SimpleFunction(
-        description = "Return json string of a JsonArray")
-    public static String JsonArray_ToString(JsonArray jsonArray) {
-        return jsonArray.toString();
-    }
-
-    /**
      * Get a value from jsonArray with a path
      * e.g. jsonArray=[1,[1,2,3,{"key":"valueWanted"]],3], path=2.4.key, result="valueWanted"
      * @param jsonArray
@@ -424,16 +423,6 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         description = "Return a empty JsonObject: {}")
     public static JsonObject JsonObject_CreateEmpty() {
         return new JsonObject();
-    }
-
-    /**
-     * @param jsonObject
-     * @return String - json string of the JsonObject
-     */
-    @SimpleFunction(
-        description = "Return json string of the JsonObject")
-    public static String JsonObject_ToString(JsonObject jsonObject) {
-        return jsonObject.toString();
     }
 
     /**
