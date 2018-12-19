@@ -241,6 +241,77 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         return jsonArray.toString();
     }
 
+    /**
+     * Get a value from jsonArray with a path
+     * e.g. jsonArray=[1,[1,2,3,{"key":"valueWanted"]],3], path=2.4.key, result="valueWanted"
+     */
+    @SimpleFunction(
+        description = "Get a value from jsonArray with a path"
+                    + "e.g. jsonArray=[1,[1,2,3,{\"key\":\"valueWanted\"]],3], path=2.4.key, result=\"valueWanted\"")
+    public static Object JsonArray_GetPath(JsonArray jsonArray, String path) {
+        try {
+            String[] splitRes = path.split("\\.", 2);
+            int index = Integer.parseInt(splitRes[0]);
+            Object value = makeSureJSONTypeConverted(JsonArray_Get(jsonArray, index));
+            if (splitRes.length == 1) {
+                return value;
+            }
+            String relativePath = splitRes[1];
+            if (value instanceof JsonArray) {
+                return JsonArray_GetPath((JsonArray) value, relativePath);
+            }
+            if (value instanceof JsonObject) {
+                return JsonObject_GetPath((JsonObject) value, relativePath);
+            }
+        }
+        catch (IndexOutOfBoundsException ok) {}
+        catch (NumberFormatException ok) {}
+        catch (NullPointerException ok) {}
+        return null;
+    }
+
+    private static Object makeSureJSONTypeConverted(Object obj) {
+        if (obj instanceof JSONArray) {
+            return new JsonArray((JSONArray) obj);
+        }
+        if (obj instanceof JSONObject) {
+            return new JsonObject((JSONObject) obj);
+        }
+        return obj;
+    }
+
+    /**
+     * Put a value into jsonArray with a path
+     * e.g. jsonArray=[1,[1,2,3,{"key":"value"]],3], path=2.4.key, value="newValue"
+     *      result=[1,[1,2,3,{"key":"newValue"]],3]
+     */
+    @SimpleFunction(
+        description = "Put a value into jsonArray with a path"
+                    + "e.g. jsonArray=[1,[1,2,3,{\"key\":\"value\"]],3], path=2.4.key, value=\"newValue\", "
+                    + "result=[1,[1,2,3,{\"key\":\"newValue\"]],3]")
+    public static void JsonArray_PutPath(JsonArray jsonArray, String path, Object value) {
+        try {
+            String[] splitRes = path.split("\\.", 2);
+            int index = Integer.parseInt(splitRes[0]);
+            if (splitRes.length == 1) {
+                jsonArray.getArray().put(index, value);
+                return;
+            }
+            Object child = makeSureJSONTypeConverted(JsonArray_Get(jsonArray, index));
+            String relativePath = splitRes[1];
+            if (child instanceof JsonArray) {
+                JsonArray_PutPath((JsonArray) child, relativePath, value);
+            }
+            if (child instanceof JsonObject) {
+                JsonObject_PutPath((JsonObject) child, relativePath, value);
+            }
+        }
+        catch (IndexOutOfBoundsException ok) {}
+        catch (NumberFormatException ok) {}
+        catch (NullPointerException ok) {}
+        catch (JSONException ok) {}
+    }
+
 
 
     /**
@@ -324,6 +395,67 @@ public class JsonUtils extends AndroidNonvisibleComponent {
         description = "Return json string of a JsonObject")
     public static String JsonObject_ToString(JsonObject jsonObject) {
         return jsonObject.toString();
+    }
+
+    /**
+     * Get a value from jsonObject with a path
+     * e.g. jsonObject={"a":[1,2,3,{"b":"valueWanted"}]}, path=a.4.b, result="valueWanted"
+     */
+    @SimpleFunction(
+        description = "Get a value from jsonArray with a path"
+                    + "e.g. jsonObject={\"a\":[1,2,3,{\"b\":\"valueWanted\"}]}, path=a.4.b, result=\"valueWanted\"")
+    public static Object JsonObject_GetPath(JsonObject jsonObject, String path) {
+        try {
+            String[] splitRes = path.split("\\.", 2);
+            String key = splitRes[0];
+            Object value = makeSureJSONTypeConverted(JsonObject_Get(jsonObject, key));
+            if (splitRes.length == 1) {
+                return value;
+            }
+            String relativePath = splitRes[1];
+            if (value instanceof JsonArray) {
+                return JsonArray_GetPath((JsonArray) value, relativePath);
+            }
+            if (value instanceof JsonObject) {
+                return JsonObject_GetPath((JsonObject) value, relativePath);
+            }
+        }
+        catch (IndexOutOfBoundsException ok) {}
+        catch (NumberFormatException ok) {}
+        catch (NullPointerException ok) {}
+        return null;
+    }
+
+    /**
+     * Put a value into jsonObject with a path
+     * e.g. jsonObject={"a":[1,2,3,{"b":"value"}]}, path=a.4.b, value="newValue"
+     *      result={"a":[1,2,3,{"b":"newValue"}]}
+     */
+    @SimpleFunction(
+        description = "Put a value into jsonArray with a path"
+                    + "e.g. jsonObject={\"a\":[1,2,3,{\"b\":\"value\"}]}, path=a.4.b, value=\"newValue\", "
+                    + "result={\"a\":[1,2,3,{\"b\":\"newValue\"}]}")
+    public static void JsonObject_PutPath(JsonObject jsonObject, String path, Object value) {
+        try {
+            String[] splitRes = path.split("\\.", 2);
+            String key = splitRes[0];
+            if (splitRes.length == 1) {
+                jsonObject.getObject().putOpt(key, value);
+                return;
+            }
+            Object child = makeSureJSONTypeConverted(JsonObject_Get(jsonObject, key));
+            String relativePath = splitRes[1];
+            if (child instanceof JsonArray) {
+                JsonArray_PutPath((JsonArray) child, relativePath, value);
+            }
+            if (child instanceof JsonObject) {
+                JsonObject_PutPath((JsonObject) child, relativePath, value);
+            }
+        }
+        catch (IndexOutOfBoundsException ok) {}
+        catch (NumberFormatException ok) {}
+        catch (NullPointerException ok) {}
+        catch (JSONException ok) {}
     }
 
 }
