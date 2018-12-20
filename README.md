@@ -16,6 +16,12 @@ So a prefered way to convert this into a strict String via a join-text block.
 * JsonObject
   * JsonObject is a container of org.json.JSONObject. It is defined for functions like `JsonObject_Put`
   * Can be parsed as a Json object String, e.g. `{}`, `{"number":1, "text":"foobar", "boolean":true}`
+* JSONArray & JSONObject
+  * These are native Android types, usually you don't need to know about them.
+
+The following table is about converting different types to each other
+
+![image](https://user-images.githubusercontent.com/22613139/50241709-3ad59680-0403-11e9-83f0-15fed9148be7.png)
 
 ## Functions
 
@@ -34,13 +40,16 @@ So a prefered way to convert this into a strict String via a join-text block.
   * returns:
     * a list that represents the json
 
-![image](https://user-images.githubusercontent.com/22613139/44954323-edc0c980-aed2-11e8-85ac-ee28980c5cfd.png)
+![image](https://user-images.githubusercontent.com/22613139/50244052-e550b800-0409-11e9-8571-8c858d1083c7.png)
 
 * JsonArray_Append
   * Append an value. This increases the array's length by one.
   * parameters:
     * JsonArray
     * value (any)
+* JsonArray_CreateEmpty
+  * returns:
+    * a empty JsonArray (json string: `[]`)
 * JsonArray_Get
   * Get the object value associated with an index. Return null if there is no object at that index.
   * parameters:
@@ -48,6 +57,9 @@ So a prefered way to convert this into a strict String via a join-text block.
     * index of the item (index start from 1)
   * returns:
     * the value of the item
+
+![image](https://user-images.githubusercontent.com/22613139/50244077-f8fc1e80-0409-11e9-8492-65d53b2b8638.png)
+
 * JsonArray_Length
   * Get the number of elements in the JsonArray, included nulls.
   * parameters:
@@ -66,7 +78,7 @@ So a prefered way to convert this into a strict String via a join-text block.
     * JsonArray
     * index of the item (index start from 1)
 
-![image](https://user-images.githubusercontent.com/22613139/44954312-cc5fdd80-aed2-11e8-8d7b-fb933d5af9da.png)
+![image](https://user-images.githubusercontent.com/22613139/50244117-13ce9300-040a-11e9-80e2-ce9cef054af5.png)
 
 * JsonObject_Contains
   * Determine if the JSONObject contains a specific key.
@@ -75,6 +87,9 @@ So a prefered way to convert this into a strict String via a join-text block.
     * key (String) of the item
   * returns:
     * if the key exists in JsonObject
+* JsonObject_CreateEmpty
+  * returns:
+    * a empty JsonObject (json string: `{}`)
 * JsonObject_Get
   * Get the value object associated with a key. Returns null if there is no value.
   * parameters:
@@ -82,6 +97,15 @@ So a prefered way to convert this into a strict String via a join-text block.
     * key (String) of the item
   * returns:
     * value of the key paired up to
+* JsonObject_GetKeyList
+  * List all keys in the JsonObject
+  * parameters:
+    * jsonObject
+  * returns:
+    * a list that contains all keys exist in the jsonObject
+
+![image](https://user-images.githubusercontent.com/22613139/50244162-2ea10780-040a-11e9-8ff3-06db1c7d2215.png)
+
 * JsonObject_Put
   * Put a key-value pair in the JsonObject.
   * parameters:
@@ -100,18 +124,35 @@ So a prefered way to convert this into a strict String via a join-text block.
   * returns:
     * number of the key-value pairs
 
-![image](https://user-images.githubusercontent.com/22613139/44954501-a425ae00-aed5-11e8-963b-6ae52286a613.png)
+![image](https://user-images.githubusercontent.com/22613139/50244224-598b5b80-040a-11e9-96b4-5b251eff8251.png)
 
-* List2JsonString
-  * Convert an App Inventor list into a json string
-  * Any App Inventor list except for **lists of key-value pairs** would be considered as a JsonArray
-    * **list of key-value pairs:** list with all list items are lists with two items and the first list item is a text) (see sample below)
+* Json_GetPath
+  * Get a value from JsonArray / JsonObject with a path.
   * parameters:
-    * list 
+    * json
+    * path
   * returns:
-    * corresponding Json String
-  * sample:  
-    ![](https://user-images.githubusercontent.com/22613139/44947212-54df6f00-ae3c-11e8-86e6-50bc0d462a69.png)
+    * (value) / null
+  * example:
+    * json=`[1,[1,2,3,{"key":"valueWanted"]],3]`
+    * path=`2.4.key`
+    * result=`"valueWanted"`
+* Json_PutPath
+  * Put a value into JsonArray / JsonObject with a path.
+  * parameters:
+    * json
+    * path
+    * value
+  * example:
+    * json=`[1,[1,2,3,{"key":"value"]],3]`
+    * path=`2.4.key`
+    * value=`"newValue"`
+    * json after put: `[1,[1,2,3,{"key":"newValue"]],3]`
+* List2JsonString
+  * ***DEPRECATED***, use ToJsonString(object) instead
+
+![image](https://user-images.githubusercontent.com/22613139/50244320-9fe0ba80-040a-11e9-85ea-9ef9a1ad2cf0.png)
+
 * ParseJsonString
   * Parse a json string into a JsonArray / JsonObject
   * parameters:
@@ -124,8 +165,15 @@ So a prefered way to convert this into a strict String via a join-text block.
     * list
   * returns:
     * a corresponding JsonArray / JsonObject
+* ToJsonString
+  * Convert an App Inventor list into a json string
+  * parameters:
+    * object - list / JsonArray / JsonObject
+      * list: Any App Inventor list except for **lists of key-value pairs** would be considered as a JsonArray. **List of key-value pairs:** list with all list items are lists with two items and the first list item is a text). e.g. `((key1 value1) (key2 value2))`
+  * returns:
+    * corresponding Json String
 
-![image](https://user-images.githubusercontent.com/22613139/44956212-fb864700-aef2-11e8-920b-73348de50434.png)
+![image](https://user-images.githubusercontent.com/22613139/50244393-ca327800-040a-11e9-9524-bc08ea44830c.png)
 
 * isAJsonArray
   * Check if an object is a JsonArray
@@ -134,6 +182,6 @@ So a prefered way to convert this into a strict String via a join-text block.
 * isAJsonObject
   * Check if an object is a JsonObject
 * isJsonObject
-  * ***DEPRECATED*** use `CanParseJsonObject` instead
+  * ***DEPRECATED*** use `CanParseJsonObject(list)` instead
 * isNull
   * Check if an object is null
