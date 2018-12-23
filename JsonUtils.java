@@ -359,7 +359,7 @@ public class JsonUtils extends AndroidNonvisibleComponent {
      */
     @SimpleFunction(
         description = "Get a value from JsonArray / JsonObject with a path. "
-                    + "e.g. json=[1,[1,2,3,{\"key\":\"valueWanted\"]],3], path=2.4.key, result=\"valueWanted\"")
+                    + "e.g. json=[1,[1,2,3,{\"key\":\"valueWanted\"}],3], path=2.4.key, result=\"valueWanted\"")
     public static Object Json_GetPath(JsonType json, String path) {
         try {
             String[] splitRes = path.split("\\.", 2);
@@ -383,7 +383,7 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     /**
      * Put a value into JsonArray / JsonObject with a path
      * e.g. json=[1,[1,2,3,{"key":"value"]],3], path=2.4.key, value="newValue"
-     *      result=[1,[1,2,3,{"key":"newValue"]],3]
+     *      json after put=[1,[1,2,3,{"key":"newValue"]],3]
      * @param json
      * @param path
      * @param value
@@ -391,15 +391,15 @@ public class JsonUtils extends AndroidNonvisibleComponent {
     @SimpleFunction(
         description = "Put a value into JsonArray / JsonObject with a path"
                     + "e.g. json=[1,[1,2,3,{\"key\":\"value\"]],3], path=2.4.key, value=\"newValue\", "
-                    + "result=[1,[1,2,3,{\"key\":\"newValue\"]],3]")
+                    + "json after put=[1,[1,2,3,{\"key\":\"newValue\"]],3]")
     public static void Json_PutPath(JsonType json, String path, Object value) {
         try {
             String[] splitRes = path.split("\\.", 2);
             if (splitRes.length == 1) {
                 if (json instanceof JsonArray) {
-                    ((JsonArray) json).getArray().put(Integer.parseInt(splitRes[0]), value);
+                    JsonArray_Put((JsonArray) json, Integer.parseInt(splitRes[0]), value);
                 } else {
-                    ((JsonObject) json).getObject().put(splitRes[0], value);
+                    JsonObject_Put((JsonObject) json, splitRes[0], value);
                 }
                 return;
             }
