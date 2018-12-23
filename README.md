@@ -134,7 +134,7 @@ The following table is about converting different types to each other
   * returns:
     * (value) / null
   * example:
-    * json=`[1,[1,2,3,{"key":"valueWanted"]],3]`
+    * json=`[1,[1,2,3,{"key":"valueWanted"}],3]`
     * path=`2.4.key`
     * result=`"valueWanted"`
 * Json_PutPath
@@ -144,10 +144,10 @@ The following table is about converting different types to each other
     * path
     * value
   * example:
-    * json=`[1,[1,2,3,{"key":"value"]],3]`
+    * json=`[1,[1,2,3,{"key":"value"}],3]`
     * path=`2.4.key`
     * value=`"newValue"`
-    * json after put: `[1,[1,2,3,{"key":"newValue"]],3]`
+    * json after put: `[1,[1,2,3,{"key":"newValue"}],3]`
 * List2JsonString
   * ***DEPRECATED***, use ToJsonString(object) instead
 
