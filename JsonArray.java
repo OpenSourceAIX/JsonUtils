@@ -48,6 +48,9 @@ public final class JsonArray extends JsonType {
         }
         this.array = array;
     }
+    JsonArray(String json) throws JSONException {
+        this(new JSONArray(json));
+    }
 
     @Override
     public String toString() {

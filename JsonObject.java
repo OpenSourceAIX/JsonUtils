@@ -65,6 +65,9 @@ public final class JsonObject extends JsonType {
         super(null);
         this.object = object;
     }
+    JsonObject(String json) throws JSONException {
+        this(new JSONObject(json));
+    }
 
     @Override
     public String toString() {

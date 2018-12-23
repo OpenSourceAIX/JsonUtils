@@ -44,12 +44,45 @@
                 "isNull": "值为空"
             },
             "params": {
+                "path": "路径",
                 "jsonArray": "json数组",
                 "jsonObject": "json对象",
                 "object": "输入值",
                 "key": "键",
                 "value": "值",
                 "index": "索引"
+            }
+        }
+    },
+    "JsonUtilsSimple": {
+        "en": {
+            "component": "Json Utilities Simple",
+            "helpString": "Json Utilities Simple is based on Json Utilities, simplied operations and all operations are on json strings. Developers don't need to worry about JsonArray or JsonObject types",
+            "properties": {},
+            "events": {},
+            "methods": {},
+            "params": {}
+        },
+        "zh_CN": {
+            "component": "Json精简工具集",
+            "helpString": "Json精简工具集基于Json工具集，简化了各类操作，基于json文本进行操作，无需顾虑JsonArray或者JsonObject类型",
+            "properties": {},
+            "events": {},
+            "methods": {
+                "EmptyArray": "空列表",
+                "EmptyObject": "空对象",
+                "GetPath": "路径取值",
+                "Get": "取值",
+                "IsNull": "值为空",
+                "Length": "长度或大小",
+                "PutPath": "路径赋值",
+                "Put": "赋值"
+            },
+            "params": {
+                "path": "路径",
+                "object": "输入值",
+                "keyOrIndex": "键或索引值",
+                "value": "值"
             }
         }
     }
