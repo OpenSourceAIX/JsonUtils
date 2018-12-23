@@ -24,7 +24,7 @@ import org.json.JSONObject;
     version = JsonUtils.VERSION)
 public class JsonUtils extends AndroidNonvisibleComponent {
 
-    public static final int VERSION = 2;
+    public static final int VERSION = 3;
 
     public JsonUtils(ComponentContainer container) {
         super(container.$form());
